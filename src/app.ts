@@ -1,3 +1,17 @@
+import { Invoice } from './classes/Invoice.js';
+import { Payment } from './classes/Payment.js';
+import { HasFormatter } from './interfaces/HasFormatter.js';
+
+let docOne: HasFormatter;
+let docTwo: HasFormatter;
+
+docOne = new Invoice('yoshi', 'web work', 250);
+docTwo = new Payment('mario', 'plumbing work', 200);
+
+let docs: HasFormatter[] = [];
+docs.push(docOne);
+docs.push(docTwo);
+
 // interfaces
 interface IsPerson {
     name: string;
@@ -22,11 +36,6 @@ const greetPerson = (person: IsPerson) => {
     console.log('hello', person.name);
 }
 
-greetPerson(me)
-
-console.log(me);
-
-import { Invoice } from './classes/Invoice.js';
 
 //const anchor = document.querySelector('a')!;
 
@@ -38,7 +47,7 @@ import { Invoice } from './classes/Invoice.js';
 
 //const form = document.querySelector('form')!;
 
-const invOne = new Invoice('mario','work on mario website',250);
+/* const invOne = new Invoice('mario','work on mario website',250);
 const invTwo = new Invoice('luigi','work on luigi website',300);
 
 let invoices: Invoice[] = [];
@@ -49,7 +58,7 @@ invoices.forEach(inv => {
     console.log(inv.client, inv.amount, inv.format());
 })
 
-invTwo.amount = 400;
+invTwo.amount = 400; */
 
 const form = document.querySelector('.new-item-form') as HTMLFormElement;
 //console.log(form.children);
@@ -62,11 +71,12 @@ const amount = document.querySelector('#amount') as HTMLInputElement;
 
 form.addEventListener('submit', (e: Event) => {
     e.preventDefault();
+    let doc: HasFormatter;
+    if (type.value === 'invoice'){
+        doc = new Invoice(toFrom.value, details.value, amount.valueAsNumber)
+    } else {
+        doc = new Payment(toFrom.value, details.value, amount.valueAsNumber)
+    }
 
-    console.log(
-        type.value,
-        toFrom.value,
-        details.value,
-        amount.valueAsNumber
-    );
-})
+    console.log(doc);
+});
